@@ -18,7 +18,7 @@ The stack use custom image for apache-php deployment with index.php file for dat
 apache-php-service.yaml expose apache-php deployment publically via LoadBalancer, make sure you use k8s enviroment that support this.
 
 
-##Disadvantages:
+## Disadvantages:
 Database do not use persistent storage.
 Database password are hardcoded into index.php file.
 
