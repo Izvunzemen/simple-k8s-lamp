@@ -1,9 +1,9 @@
-#TL:DR
+# TL:DR
 ```
 ./script.sh
 ```
 
-##This is a simple LAMP stack for k8s.
+## This is a simple LAMP stack for k8s.
 
 
 Database are deployed via standart mysql docker image, the mysql password are injected via secret.yaml file.
@@ -24,7 +24,7 @@ Database password are hardcoded into index.php file.
 
 
 
-##The apache-php image is builded from Dockerfile with following content:
+## The apache-php image is builded from Dockerfile with following content:
 
 ```
 FROM php:apache
@@ -34,7 +34,7 @@ RUN docker-php-ext-enable mysqli
 copy index.php /var/www/html/index.php
 ```
 
-##index.php content for Dockerfile:
+## index.php content for Dockerfile:
 
 ```
 <?php
