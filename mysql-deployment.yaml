@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: mysql
+  name: mysql
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: mysql
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: mysql
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-password
+              key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_HOST
+          value: mysql
+        image: mysql:5.7
+        name: mysql
+        resources: {}
+status: {}
