@@ -1,4 +1,4 @@
-# TL:DR
+# TL;DR
 ```
 ./script.sh
 ```
@@ -6,20 +6,25 @@
 ## This is a simple LAMP stack for k8s.
 
 
-Database are deployed via standart mysql docker image, the mysql password are injected via secret.yaml file.
+
+## Database
+Deployed via standart mysql docker image version 5.7, the mysql password are injected via secret.yaml file.
 
 you can generate own password with following script:
 ```
 kubectl create secret generic mysql-password --from-literal=MYSQL_ROOT_PASSWORD='YOUR_PASSWORD_HERE' --dry-run -o yaml > secret.yaml
 ```
 
-The stack use custom image for apache-php deployment with index.php file for database connection check and installed mysqli, you can find the Dockerfile and index.php content below.
+## Apache-php
+Deployment use custom image that contain index.php file for database connection check and mysqli installation, you can find the Dockerfile from which the image was build and index.php content below.
 
+## Run on local k8s cluster
 apache-php-service.yaml expose apache-php deployment publically via LoadBalancer, make sure you use k8s enviroment that support this.
+If you want to test this on local k8s cluster, such as minikube, you can change expose type to from LoadBalancer to NodePort in file apache-php-service.yaml
 
 
 ## Disadvantages:
-Database do not use persistent storage.
+Database do not use persistent storage. 
 Database password are hardcoded into index.php file.
 
 
