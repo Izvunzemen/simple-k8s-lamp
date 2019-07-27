@@ -28,5 +28,10 @@ spec:
           value: mysql
         image: mysql:5.7
         name: mysql
-        resources: {}
-status: {}
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
