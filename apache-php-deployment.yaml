@@ -1,24 +1,29 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  creationTimestamp: null
-  labels:
-    run: apache-php
-  name: apache-php
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    creationTimestamp: null
+    labels:
       run: apache-php
-  strategy: {}
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
+    name: apache-php
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
         run: apache-php
-    spec:
-      containers:
-      - image: kodka/php-apache:latest
-        name: apache-php
-        resources: {}
-status: {}
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          run: apache-php
+      spec:
+        containers:
+        - image: kodka/php-apache:latest
+          name: apache-php
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
