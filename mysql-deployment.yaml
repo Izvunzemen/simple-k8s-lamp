@@ -6,7 +6,7 @@ metadata:
     run: mysql
   name: mysql
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       run: mysql
