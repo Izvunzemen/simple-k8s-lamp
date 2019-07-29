@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   creationTimestamp: null
@@ -28,6 +28,11 @@ spec:
           value: mysql
         image: kodka/mysql:latest
         name: mysql
+        livenessProbe:
+          tcpSocket:
+             port: 3306
+          initialDelaySeconds: 5
+          periodSeconds: 5
         resources:
           requests:
             memory: "128Mi"
