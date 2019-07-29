@@ -1,22 +1,49 @@
 # TL;DR
 ```
-./script.sh
+./script.sh - on Kubernetes master
 ```
 
 ## This is a simple LAMP stack for k8s.
 
 
+# Database
+Deployed via custom image, using original mysql:5.7 docker image, the only change is that "datadir" points to "/sql", where Persistent Storage was mounted.
 
-## Database
-Deployed via standart mysql docker image version 5.7, the mysql password are injected via secret.yaml file.
+## Dockerfile content for database image:
+
+```
+FROM mysql:5.7
+CMD ["--datadir=/sql"]
+```
+
+The mysql password are injected via **secret.yaml** file.
 
 you can generate own password with following script:
 ```
 kubectl create secret generic mysql-password --from-literal=MYSQL_ROOT_PASSWORD='YOUR_PASSWORD_HERE' --dry-run -o yaml > secret.yaml
 ```
 
-## Apache-php
-Deployment use custom image that contain index.php file for database connection check and mysqli installation, you can find the Dockerfile from which the image was build and index.php content below.
+## Database Persistance
+The database storage persistance is provided via pv.yaml and pvc.yaml, the hostPath for volume is **/tmp/data**, created by script.sh on Kubernetes master. The storage size is **3GB.**
+
+## Database Pods, Resources and Autoscaling
+
+By defaut, **mysql-deployment.yaml** will deploy 1 replica with:
+request memory: 128Mi; cpu: 250m and
+limits memory: 256Mi; cpu: 500m
+
+**mysql-autoscaler.yaml** will scale up to 3 replicas if cpu utiziation is under 80 percent.
+
+# Apache-php
+apache-php-deployment.yaml use custom image that contain index.php file for database connection check and mysqli installation, you can find the Dockerfile from which the image was build and index.php content below.
+
+## Apache-php Pods, Resources and Autoscaling
+
+By defaut, **apache-php-deployment.yaml** will deploy 2 replicas with:
+request memory: 64Mi; cpu: 250m and
+limits memory: 128Mi; cpu: 500m
+
+**mysql-autoscaler.yaml** will scale up to 4 replicas if cpu utiziation is under 80 percent.
 
 ## Run on local k8s cluster
 apache-php-service.yaml expose apache-php deployment publically via LoadBalancer, make sure you use k8s enviroment that support this.
@@ -24,7 +51,6 @@ If you want to test this on local k8s cluster, such as minikube, you can change 
 
 
 ## Disadvantages:
-Database do not use persistent storage. 
 Database password are hardcoded into index.php file.
 
 
@@ -58,3 +84,9 @@ echo "Host information: " . mysqli_get_host_info($link) . PHP_EOL;
 mysqli_close($link);
 ?>
 ```
+
+## Delete deployment
+```
+./destroyall.sh
+```
+

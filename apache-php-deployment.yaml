@@ -6,7 +6,7 @@
       run: apache-php
     name: apache-php
   spec:
-    replicas: 3
+    replicas: 2
     selector:
       matchLabels:
         run: apache-php
