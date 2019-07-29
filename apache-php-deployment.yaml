@@ -1,4 +1,4 @@
-  apiVersion: apps/v1
+  apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
     creationTimestamp: null
@@ -20,6 +20,11 @@
         containers:
         - image: kodka/php-apache:latest
           name: apache-php
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
           resources:
             requests:
               memory: "64Mi"
