@@ -20,4 +20,4 @@ kubectl apply -f mysql-autoscaler.yaml
 sleep 1
 kubectl apply -f apache-php-autoscaler.yaml
 sleep 1
-echo "simple-k8s stack is now deployed"
+echo "simple-k8s-stack is now deployed!"
