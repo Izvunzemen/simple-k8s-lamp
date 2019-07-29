@@ -49,6 +49,8 @@ limits memory: 128Mi; cpu: 500m
 apache-php-service.yaml expose apache-php deployment publicly via LoadBalancer, make sure you use k8s environment that support this.
 If you want to test this on local k8s cluster, such as minikube, you can change expose type to from LoadBalancer to NodePort in file apache-php-service.yaml
 
+## Application Monitoring
+There is livenessProbe for both deployments. The livenessProbe check if tcp socket is open on port 80 for apache-php and on port 3306 for mysql every 5 seconds.
 
 ## Disadvantages:
 Database password are hardcoded into index.php file.
