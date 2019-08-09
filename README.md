@@ -32,7 +32,7 @@ By default, **mysql-deployment.yaml** will deploy 1 replica with:
 request memory: 128Mi; cpu: 250m and
 limits memory: 256Mi; cpu: 500m
 
-**mysql-autoscaler.yaml** will scale up to 3 replicas if cpu utilization is under 80 percent.
+**mysql-autoscaler.yaml** will scale up to 3 replicas if cpu utilization is above 80 percent.
 
 # Apache-php
 apache-php-deployment.yaml use custom image that contain index.php file for database connection check and mysqli installation, you can find the Dockerfile from which the image was build and index.php content below.
@@ -43,7 +43,7 @@ By default, **apache-php-deployment.yaml** will deploy 2 replicas with:
 request memory: 64Mi; cpu: 250m and
 limits memory: 128Mi; cpu: 500m
 
-**mysql-autoscaler.yaml** will scale up to 4 replicas if cpu utilization is under 80 percent.
+**mysql-autoscaler.yaml** will scale up to 4 replicas if cpu utilization is above 80 percent.
 
 ## Run on local k8s cluster
 apache-php-service.yaml expose apache-php deployment publicly via LoadBalancer, make sure you use k8s environment that support this.
